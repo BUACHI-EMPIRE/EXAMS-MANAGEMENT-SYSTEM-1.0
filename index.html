@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>School Exams Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button id="themeToggle" class="theme-toggle">
+                <i class="fas fa-sun"></i>
+                <span>Light</span>
+            </button>
+            <div class="header-content">
+                <h1><i class="fas fa-graduation-cap"></i> School Exams Management System</h1>
+                <p>Manage courses and student scores efficiently</p>
+                <div class="user-info" id="userInfo" style="display: none;">
+                    <div class="welcome-badge">
+                        <div class="welcome-status">
+                            <div class="status-dot"></div>
+                            <span class="status-text">Online</span>
+                        </div>
+                        <div class="welcome-content">
+                            <span class="welcome-label">Hello</span>
+                            <span class="welcome-username" id="userName"></span>
+                        </div>
+                        <div class="welcome-time" id="welcomeTime"></div>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="btn btn-danger logout-btn" style="display: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Authentication Section -->
+        <section id="auth-section" class="auth-section">
+            <div class="auth-container">
+
+
+                <!-- Login Form -->
+                <div id="login-form" class="auth-form active">
+                    <div class="auth-header">
+                        <h2><i class="fas fa-sign-in-alt"></i> Welcome Back</h2>
+                        <p>Sign in to access your account</p>
+                    </div>
+                    
+                    <form id="loginForm" class="auth-form-content">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary auth-btn">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                        
+                        <div class="auth-footer">
+                            <p>Don't have an account? <a href="#" onclick="toggleAuthForm('signup')">Sign up</a></p>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signup-form" class="auth-form">
+                    <div class="auth-header">
+                        <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+                        <p>Join us to start managing your school exams</p>
+                    </div>
+                    
+                    <form id="signupForm" class="auth-form-content">
+                        <div class="form-group">
+                            <label for="signupName">Username</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="signupName" placeholder="Enter your username" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupEmail">Email Address</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="signupPassword" placeholder="Create a password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small class="password-strength" id="passwordStrength"></small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupConfirmPassword">Confirm Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('signupConfirmPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                Agree to terms and conditions
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary auth-btn">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                        
+                        <div class="auth-footer">
+                            <p>Already have an account? <a href="#" onclick="toggleAuthForm('login')">Sign in</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <main class="main-content" id="main-content" style="display: none;">
+            <!-- Course Setup Section -->
+            <section id="course-setup" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-book"></i> Course Setup</h2>
+                    <p>Enter the number of courses and their names</p>
+                </div>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="courseCount">Number of Courses:</label>
+                        <input type="number" id="courseCount" min="1" max="20" placeholder="Enter number of courses" class="form-input">
+                    </div>
+                    
+                    <button id="generateCourseForm" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Generate Course Form
+                    </button>
+                </div>
+
+                <div id="courseFormContainer" class="form-container" style="display: none;">
+                    <h3>Enter Course Names</h3>
+                    <div id="courseInputs"></div>
+                    <button id="createStudentForm" class="btn btn-success">
+                        <i class="fas fa-user-plus"></i> Create Student Entry Form
+                    </button>
+                </div>
+            </section>
+
+            <!-- Class Score Configuration Section -->
+            <section id="class-score-config" class="section" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-percentage"></i> Class Score Configuration</h2>
+                    <p>Configure class score settings for each course</p>
+                </div>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="enableClassScores" class="form-checkbox">
+                            <span class="checkmark"></span>
+                            Enable Class Scores
+                        </label>
+                        <small class="form-help">Check this to include class scores in the final grade calculation</small>
+                    </div>
+                    
+                    <div id="classScoreConfigContainer" style="display: none;">
+                        <div class="form-group">
+                            <label for="classScorePercentage">Class Score Percentage:</label>
+                            <input type="number" id="classScorePercentage" min="0" max="100" value="30" class="form-input">
+                            <small class="form-help">Percentage of final grade allocated to class scores (0-100%)</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="examScorePercentage">Exam Score Percentage:</label>
+                            <input type="number" id="examScorePercentage" min="0" max="100" value="70" class="form-input" readonly>
+                            <small class="form-help">Percentage of final grade allocated to exam scores (automatically calculated)</small>
+                        </div>
+                        
+                        <div id="courseClassScoreConfigs"></div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="saveClassScoreConfig" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Configuration
+                        </button>
+                        <button id="proceedToStudentEntry" class="btn btn-success">
+                            <i class="fas fa-arrow-right"></i> Proceed to Student Entry
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Grading System Configuration Section -->
+            <section id="grading-system-config" class="section" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-star"></i> Grading System Configuration</h2>
+                    <p>Choose and customize your grading system</p>
+                </div>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="gradingSystemType">Grading System Type:</label>
+                        <select id="gradingSystemType" class="form-input">
+                            <option value="university">University System (A+, A, B+, B, C+, C, D+, D, F)</option>
+                            <option value="secondary">Secondary School System (A1, B2, B3, C4, C5, C6, D7, E8, F9)</option>
+                            <option value="custom">Custom Grading System</option>
+                        </select>
+                        <small class="form-help">Select the grading system that matches your institution</small>
+                    </div>
+                    
+                    <!-- Grading System Display -->
+                    <div id="gradingSystemDisplay" class="grading-system-display" style="display: none;">
+                        <div class="form-group">
+                            <label>Current Grading System:</label>
+                            <div class="grading-system-dropdown">
+                                <div class="grading-system-preview" id="gradingSystemPreview">
+                                    <span class="preview-text">Select a grading system type to view</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="grading-system-details" id="gradingSystemDetails">
+                                    <div class="grade-list" id="gradeList"></div>
+                                </div>
+                            </div>
+                            <small class="form-help">Click to expand and view the complete grading system</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Custom Grading System Configuration (Hidden by default, shown only for custom systems) -->
+                    <div id="gradingSystemConfig" style="display: none;">
+                        <!-- Custom Grading System Naming -->
+                        <div id="customGradingNaming" style="display: none;">
+                            <div class="form-group">
+                                <label for="gradingSystemName">Grading System Name:</label>
+                                <input type="text" id="gradingSystemName" class="form-input" placeholder="e.g., My Custom System, Department Standard, etc.">
+                                <small class="form-help">Give your grading system a descriptive name</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="creatorName">Your Name/Position:</label>
+                                <input type="text" id="creatorName" class="form-input" placeholder="e.g., John Doe, Math Teacher, Head of Department">
+                                <small class="form-help">Enter your name or position for reference</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="gradingSystemDescription">Description (Optional):</label>
+                                <textarea id="gradingSystemDescription" class="form-input" rows="3" placeholder="Brief description of your grading system or any special notes..."></textarea>
+                                <small class="form-help">Optional description to help others understand your system</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Grade Management for Custom Systems -->
+                        <div id="gradeRangesContainer"></div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="saveGradingSystem" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Grading System
+                        </button>
+                        <button id="proceedToStudentEntryFromGrading" class="btn btn-success">
+                            <i class="fas fa-arrow-right"></i> Proceed to Student Entry
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Saved Grading Systems -->
+                <div id="savedGradingSystems" class="form-container" style="display: none;">
+                    <h3 class="section-subtitle"><i class="fas fa-bookmark"></i> Saved Grading Systems</h3>
+                    <p class="section-description">Your previously saved grading systems that you can load and use.</p>
+                    
+                    <div id="savedSystemsList"></div>
+                    
+                    <div class="button-group">
+                        <button id="loadGradingSystem" class="btn btn-outline" disabled>
+                            <i class="fas fa-download"></i> Load Selected System
+                        </button>
+                        <button id="deleteGradingSystem" class="btn btn-danger" disabled>
+                            <i class="fas fa-trash"></i> Delete Selected System
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student Entry Section -->
+            <section id="student-entry" class="section" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-graduate"></i> Student Score Entry</h2>
+                    <p>Enter student information and scores in four steps</p>
+                </div>
+                
+                <!-- Step 1: Batch Settings -->
+                <div class="form-container step-container" id="step1-container">
+                    <h3 class="step-title"><i class="fas fa-cogs"></i> Step 1: Batch Settings</h3>
+                    <p class="step-description">Set the class, term, and academic year that will apply to all students you add in this session.</p>
+                    
+                    <div class="form-group">
+                        <label for="batchClassName">Class:</label>
+                        <input type="text" id="batchClassName" placeholder="e.g., Form 2A" class="form-input" required>
+                        <small class="form-help">This class will be applied to all students</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="batchTerm">Term:</label>
+                        <input type="text" id="batchTerm" placeholder="e.g., Term 1" class="form-input" required>
+                        <small class="form-help">This term will be applied to all students</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="batchSessionYear">Academic Year:</label>
+                        <input type="text" id="batchSessionYear" placeholder="e.g., 2024/2025" class="form-input" required>
+                        <small class="form-help">This academic year will be applied to all students</small>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="nextToStudentInfo" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Next: Student Information
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Student Information -->
+                <div class="form-container step-container" id="step2-container" style="display: none;">
+                    <h3 class="step-title"><i class="fas fa-user"></i> Step 2: Student Information</h3>
+                    <div class="form-group">
+                        <label for="studentName">Student Name:</label>
+                        <input type="text" id="studentName" placeholder="Enter student's full name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentComment1">Teacher's Comment (optional):</label>
+                        <textarea id="studentComment1" class="form-input" rows="3" placeholder="e.g., Excellent performance and class participation."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentComment2">Head's Comment (optional):</label>
+                        <textarea id="studentComment2" class="form-input" rows="3" placeholder="e.g., Keep up the great work."></textarea>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="backToStep1" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back: Batch Settings
+                        </button>
+                        <button id="nextToClassAssessments" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Next: Class Assessments
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Class Assessment Scores -->
+                <div class="form-container step-container" id="step3-container" style="display: none;">
+                    <h3 class="step-title"><i class="fas fa-tasks"></i> Step 3: Class Assessment Scores</h3>
+                    <p class="step-description">Enter class assessment scores for each course. The system will calculate the weighted class score based on your configuration.</p>
+                    
+                    <div class="assessment-options">
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="includeClassAssessments" checked>
+                                <span class="checkmark"></span>
+                                Include Class Assessment Scores
+                            </label>
+                            <small class="form-help">Uncheck this if you only want to use exam scores (100% weight)</small>
+                        </div>
+                    </div>
+                    
+                    <div id="classAssessmentInputs"></div>
+                    
+                    <div class="button-group">
+                        <button id="backToStudentInfo" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back: Student Information
+                        </button>
+                        <button id="nextToExamScores" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Next: Exam Scores
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Exam Scores -->
+                <div class="form-container step-container" id="step4-container" style="display: none;">
+                    <h3 class="step-title"><i class="fas fa-file-alt"></i> Step 4: Exam Scores</h3>
+                    <p class="step-description">Enter exam scores for each course. The system will calculate the weighted exam score based on your configuration.</p>
+                    
+                    <div id="examScoreInputs"></div>
+                    
+                    <div class="button-group">
+                        <button id="backToClassAssessments" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back: Class Assessments
+                        </button>
+                        <button id="addStudent" class="btn btn-success">
+                            <i class="fas fa-save"></i> Add Student
+                        </button>
+                        <button id="clearForm" class="btn btn-secondary">
+                            <i class="fas fa-eraser"></i> Clear Form
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-bar"></i> Student Results</h2>
+                    <p>View all student scores and statistics</p>
+                </div>
+                
+                <div class="results-controls">
+                    <button id="importData" class="btn btn-outline">
+                        <i class="fas fa-upload"></i> Import CSV
+                    </button>
+                    <button id="exportData" class="btn btn-outline">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button id="settingsBtn" class="btn btn-outline">
+                        <i class="fas fa-cog"></i> Settings
+                    </button>
+                    <button id="reportSetupBtn" class="btn btn-outline">
+                        <i class="fas fa-file-signature"></i> Report Setup
+                    </button>
+                    <button id="printReportsBtn" class="btn btn-primary">
+                        <i class="fas fa-print"></i> Print Report Cards
+                    </button>
+                    <button id="clearAll" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Clear All Data
+                    </button>
+                </div>
+                
+                <div id="resultsTable" class="table-container">
+                    <p class="no-data">No student data available. Add students to see results.</p>
+                </div>
+                
+                <!-- Statistics Section -->
+                <div id="statisticsSection" class="statistics-section" style="display: none;">
+                    <div class="section-header">
+                        <h3><i class="fas fa-chart-line"></i> Class Statistics</h3>
+                        <p>Summary of student performance and course analytics</p>
+                    </div>
+                    
+                    <div class="stats-summary">
+                        <div class="summary-cards">
+                            <div class="summary-card">
+                                <div class="card-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h4>Total Students</h4>
+                                    <div class="card-value" id="totalStudentsCount">0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-card">
+                                <div class="card-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h4>Total Courses</h4>
+                                    <div class="card-value" id="totalCoursesCount">0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-card">
+                                <div class="card-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h4>Top Performer</h4>
+                                    <div class="card-value" id="topPerformerName">-</div>
+                                    <div class="card-subtitle" id="topPerformerScore">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+
+        <!-- Success/Error Messages -->
+        <div id="messageContainer" class="message-container"></div>
+        
+        <!-- Hidden Report Cards Container (used only for printing) -->
+        <div id="reportCardsContainer" style="display: none;"></div>
+        
+        <!-- CSV Import Modal -->
+        <div id="csvImportModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-file-csv"></i> Import Students from CSV</h3>
+                    <button id="closeImportModal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="import-instructions">
+                        <h4>CSV Format Requirements:</h4>
+                        <ul>
+                            <li>First row should contain headers: Student Name, Class, Term, Session/Year, [Course1], [Course2], etc.</li>
+                            <li>Course columns should contain scores (0-100)</li>
+                            <li>Optional columns: Class, Term, Session/Year, Comment 1, Comment 2</li>
+                            <li>Download a sample CSV template below</li>
+                        </ul>
+                        <div class="template-download">
+                            <button id="downloadTemplate" class="btn btn-outline">
+                                <i class="fas fa-download"></i> Download Sample Template
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="csvFileInput">Select CSV File:</label>
+                        <input type="file" id="csvFileInput" accept=".csv" class="form-input">
+                    </div>
+                    
+                    <div id="importPreview" class="import-preview" style="display: none;">
+                        <h4>Preview Imported Data:</h4>
+                        <div class="table-container">
+                            <table id="importPreviewTable" class="results-table">
+                                <thead>
+                                    <tr id="importPreviewHeader"></tr>
+                                </thead>
+                                <tbody id="importPreviewBody"></tbody>
+                            </table>
+                        </div>
+                        <div class="import-actions">
+                            <button id="saveImportedData" class="btn btn-success">
+                                <i class="fas fa-save"></i> Save Imported Data
+                            </button>
+                            <button id="cancelImport" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
